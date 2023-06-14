@@ -20,7 +20,7 @@ class OrderTest extends KernelTestCase
         $browser = $this->browser()->loginAs('user', 'user_password');
 
         $products = $browser->get('/api/products')->getItems();
-        $productsToOrder = array_column(array_slice($products['hydra:member'], 0, 3), '@id');
+        $productsToOrder = array_column(array_slice($products, 0, 3), '@id');
 
         $browser
             ->post('/api/orders', HttpOptions::json([

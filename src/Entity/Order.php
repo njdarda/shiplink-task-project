@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Controller\Api\RecreateOrderController;
 
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
@@ -24,6 +25,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *             "security"="is_granted('ROLE_ADMIN') or object.getOwner() == user",
  *             "denormalizationContext"={"groups"={"order:input:patch"}},
  *          },
+ *         "recreate"={
+ *             "method"="GET",
+ *             "path"="/orders/{id}/recreate",
+ *             "controller"=RecreateOrderController::class,
+ *             "openapi_context"={
+ *                 "summary"="Creates a new Order based on a cancelled Order",
+ *                 "description"="Creates a new Order based on a cancelled Order",
+ *             }
+ *         },
  *     },
  *     normalizationContext={"groups"={"order:output"}},
  *     denormalizationContext={"groups"={"order:input"}}
@@ -98,6 +108,12 @@ class Order
     public function getProducts(): Collection
     {
         return $this->products;
+    }
+
+    public function setProducts(Collection $products): self {
+        $this->products = $products;
+
+        return $this;
     }
 
     public function addProduct(Product $product): self
