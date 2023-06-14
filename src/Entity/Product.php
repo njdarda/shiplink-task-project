@@ -7,10 +7,21 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
- * @ApiResource
+ * @ApiResource(
+ *     attributes={"security"="is_granted('ROLE_USER')"},
+ *     collectionOperations={
+ *         "get",
+ *     },
+ *     itemOperations={
+ *         "get",
+ *     },
+ *     normalizationContext={"groups"={"product:output"}},
+ *     denormalizationContext={"groups"={"product:input"}}
+ * )
  */
 class Product
 {
@@ -18,6 +29,7 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"product:output"})
      */
     private $id;
 
@@ -28,26 +40,31 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"product:output"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @Groups({"product:output"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"product:output"})
      */
     private $category;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"product:output"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"product:output"})
      */
     private $image;
 
