@@ -7,11 +7,27 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
  * @ORM\Table(name="`order`")
- * @ApiResource
+ * @ApiResource(
+ *     attributes={"security"="is_granted('ROLE_USER')"},
+ *     collectionOperations={
+ *         "get",
+ *         "post",
+ *     },
+ *     itemOperations={
+ *         "get"={"security"="is_granted('ROLE_ADMIN') or object.getOwner() == user"},
+ *         "patch"={
+ *             "security"="is_granted('ROLE_ADMIN') or object.getOwner() == user",
+ *             "denormalizationContext"={"groups"={"order:input:patch"}},
+ *          },
+ *     },
+ *     normalizationContext={"groups"={"order:output"}},
+ *     denormalizationContext={"groups"={"order:input"}}
+ * )
  */
 class Order
 {
@@ -19,22 +35,26 @@ class Order
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"order:output"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"order:output"})
      */
     private $owner;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": 0})
+     * @Groups({"order:output", "order:input", "order:input:patch"})
      */
-    private $cancelled;
+    private $cancelled = false;
 
     /**
      * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="owningOrder")
+     * @Groups({"order:output", "order:input"})
      */
     private $products;
 
