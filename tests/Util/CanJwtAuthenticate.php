@@ -12,7 +12,7 @@ trait CanJwtAuthenticate
             ->post(
                 '/auth',
                 HttpOptions::json([
-                    'email' => $email,
+                    'username' => $email,
                     'password' => $password,
                 ])
             )
