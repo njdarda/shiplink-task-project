@@ -1,0 +1,10 @@
+version: "3.4"
+
+services:
+  php-fpm:
+    image: ghcr.io/njdarda/lightsail-docker-compose-test/php-fpm:main
+
+  nginx:
+    image: ghcr.io/njdarda/lightsail-docker-compose-test/nginx:main
+    ports:
+      - "80:80"

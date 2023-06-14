@@ -1,0 +1,14 @@
+version: "3.4"
+
+services:
+  php-fpm:
+    build:
+      context: ./php-fpm
+    volumes:
+      - ..:/var/www/html
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - "8000:80"
