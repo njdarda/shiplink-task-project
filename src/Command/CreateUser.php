@@ -37,6 +37,7 @@ class CreateUser extends Command
                 InputArgument::REQUIRED,
                 "User password"
             )
+            ->addArgument('roles', InputArgument::IS_ARRAY, 'User roles, e.g. ROLE_ADMIN ROLE_USER')
         ;
     }
 
@@ -44,6 +45,7 @@ class CreateUser extends Command
     {
         $username = $input->getArgument('username');
         $password = $input->getArgument('password');
+        $roles = $input->getArgument('roles');
 
         $style = new SymfonyStyle($input, $output);
 
@@ -54,12 +56,14 @@ class CreateUser extends Command
             'Creating user:',
             "    username:    <comment>{$username}</comment>",
             "    password: <comment>{$password}</comment>",
+            '    roles:    <comment>' . implode(', ', $roles) . '</comment>',
             '</info>',
         ]);
 
         $user = new User();
         $user->setUsername($username);
         $user->setPassword($this->passwordHasher->hashPassword($user, $password));
+        $user->setRoles($roles);
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
