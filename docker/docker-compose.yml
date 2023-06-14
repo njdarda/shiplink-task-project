@@ -12,3 +12,12 @@ services:
       context: ./nginx
     ports:
       - "8000:80"
+
+  database:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_PASSWORD: db_password
+      POSTGRES_USER: db
+    volumes:
+      - ./database_data:/var/lib/postgresql/data:rw

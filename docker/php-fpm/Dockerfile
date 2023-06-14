@@ -26,6 +26,7 @@ RUN set -eux; \
         intl \
         opcache \
         zip \
+        pdo_pgsql \
     ;
 
 # install composer
