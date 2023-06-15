@@ -11,6 +11,21 @@ This application provides an API enabling users to create, cancel and recreate o
 ## Live demo
 API docs are available here:
 - Swagger docs: http://shiplink.jdarda.pl/api/docs
+
+  You can explore the APIas admin or user by logging in through `/auth` endpoint by using following payloads:
+  ```json
+  {
+    "username": "admin",
+    "password": "admin_password"
+  }
+  ```
+  ```json
+  {
+    "username": "user",
+    "password": "user_password"
+  }
+  ```
+  Once you get the token click on `Authorize` button and paste the token with `Bearer` prefix - e.g. `Bearer [TOKEN]`
 - ReDoc docs: http://shiplink.jdarda.pl/api/docs?ui=re_doc
 - GraphQL: http://shiplink.jdarda.pl/api/graphql/graphql_playground
 
