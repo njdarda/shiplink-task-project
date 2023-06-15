@@ -2,9 +2,18 @@ version: "3.4"
 
 services:
   php-fpm:
-    image: ghcr.io/njdarda/lightsail-docker-compose-test/php-fpm:main
+    image: ghcr.io/njdarda/shiplink-task-project/php-fpm:main
 
   nginx:
-    image: ghcr.io/njdarda/lightsail-docker-compose-test/nginx:main
+    image: ghcr.io/njdarda/shiplink-task-project/nginx:main
     ports:
       - "80:80"
+
+  database:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_PASSWORD: db_password
+      POSTGRES_USER: db
+    volumes:
+      - /database_data:/var/lib/postgresql/data:rw
