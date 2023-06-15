@@ -6,6 +6,7 @@ use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -32,10 +33,37 @@ class UpdateProductDatabase extends Command
     {
         $this
             ->setHelp('Use this command to fetch and update product database.')
+            ->addOption(
+                'truncate',
+                't',
+                InputOption::VALUE_NONE,
+                'Truncate products table before updating?',
+            )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        if ($input->getOption('truncate')) {
+            $this->truncateProductsDatabase();
+        }
+
+        $this->populateProductDatabaseFromFakestore();
+
+        return Command::SUCCESS;
+    }
+
+    private function truncateProductsDatabase() {
+        $products = $this->entityManager->getRepository(Product::class)->findAll();
+
+        foreach ($products as $product) {
+            $this->entityManager->remove($product);
+        }
+
+        $this->entityManager->flush();
+    }
+
+    private function populateProductDatabaseFromFakestore(): void
     {
         $response = $this->client->request(Request::METHOD_GET, self::API_URL . 'products');
 
@@ -63,7 +91,5 @@ class UpdateProductDatabase extends Command
         }
 
         $this->entityManager->flush();
-
-        return Command::SUCCESS;
     }
 }
