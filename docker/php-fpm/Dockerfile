@@ -46,14 +46,15 @@ RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 USER ${uid}:${gid}
 
-COPY --chown=${uid}:${gid} . ${workdir}
-RUN composer install || true
-
 RUN git config --global user.email "docker_user@example.com"
 RUN git config --global user.name "Docker User"
+RUN git config --global --add safe.directory /var/www/html
 
 # add /bin locations to PATH
 ENV PATH "$PATH:${workdir}/bin:${workdir}/vendor/bin"
+
+COPY --chown=${uid}:${gid} . ${workdir}
+RUN composer install || true
 
 RUN mkdir -p ${workdir}/var
 WORKDIR ${workdir}
