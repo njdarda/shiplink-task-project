@@ -3,6 +3,10 @@ api_platform:
         paths: ['%kernel.project_dir%/src/Entity']
     patch_formats:
         json: ['application/merge-patch+json']
+    title: 'Shiplink recruitment task API'
+    description: 'Recruitment task for Shiplink'
+    version: '0.0.1'
+    show_webby: false
     swagger:
         api_keys:
             JWT:
