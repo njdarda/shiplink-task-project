@@ -7,6 +7,7 @@
         "php": ">=7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
         "api-platform/core": "^2.7",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.10",
@@ -43,7 +44,8 @@
         "symfony/web-link": "5.4.*",
         "symfony/yaml": "5.4.*",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0", "ext-json": "*"
+        "twig/twig": "^2.12|^3.0",
+        "webonyx/graphql-php": "^15.5"
     },
     "config": {
         "allow-plugins": {
