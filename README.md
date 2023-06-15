@@ -9,7 +9,7 @@ Task:
 This application provides an API enabling users to create, cancel and recreate orders.
 
 ## Live demo
-Application is available at http://shiplink.jdarda.pl/api
+API docs are available here:
 - Swagger docs: http://shiplink.jdarda.pl/api/docs
 - ReDoc docs: http://shiplink.jdarda.pl/api/docs?ui=re_doc
 - GraphQL: http://shiplink.jdarda.pl/api/graphql/graphql_playground
