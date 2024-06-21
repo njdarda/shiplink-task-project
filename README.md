@@ -70,3 +70,32 @@ docker exec -it docker_php-fpm_1 bin/console app:update-product-database
 ```bash
 docker exec -it docker_php-fpm_1 bin/phpunit
 ```
+
+
+# lightsail-docker-compose-test
+
+```
+(cp -R ./public ./docker/nginx/public && rm -rf ./docker/php-fpm/app && cd docker/ && docker-compose -f docker-compose.yml up --build)
+```
+
+## todo:
+- db
+- https
+- different config - dev/prod
+- timezones
+- prefixes, ${domain}
+- przejrzyj configi
+- daj cv na jdarda.pl
+  - a ten projekt na jdarda.pl/shiplink-recruitment
+- optimise php/nginx/symfony for prod?
+- entrypoint stuff?
+
+https://github.com/dunglas/symfony-docker
+https://blog.devsense.com/2019/php-nginx-docker
+https://docs.docker.com/compose/extends/
+
+
+nauczylem sie
+- lightsail
+- github actions
+- github containers
